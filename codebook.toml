@@ -1,1 +1,4 @@
-words = ["arenapro"]
+words = [
+    "arenapro",
+    "wordle",
+]
