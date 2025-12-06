@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@dao3fun/arena-rich':
+        specifier: ^1.1.3
+        version: 1.1.3
+      '@dao3fun/component':
+        specifier: ^3.3.1
+        version: 3.3.1
       '@dao3fun/mine-motion':
         specifier: ^2.0.3
         version: 2.0.3
@@ -62,6 +68,12 @@ packages:
   '@babel/runtime@7.28.4':
     resolution: {integrity: sha512-Q/N6JNWvIvPnLDvjlE1OUBLPQHH6l3CltCEsHIujp45zQUSSh8K+gHnaEX45yAT1nyngnINhvWtzN+Nb9D8RAQ==}
     engines: {node: '>=6.9.0'}
+
+  '@dao3fun/arena-rich@1.1.3':
+    resolution: {integrity: sha512-v9xTPKnyfWj9G8Tnd06dDiio4XP9yHas8PVNk1/Cdv32tUvRwXCyN0XJPg9r6ak4q91ktdvw+4CPvt67YT0zgA==}
+
+  '@dao3fun/component@3.3.1':
+    resolution: {integrity: sha512-0YODVkQ+DWpVm9DS5NR+XTjM3vhx71ARUdM5ToBemuEeVs8ntx8Nw3Ln36gZeBuJyumfje1AFuVmE2BJe6Oh3Q==}
 
   '@dao3fun/mine-motion@2.0.3':
     resolution: {integrity: sha512-pCwGllxZLu0rrR+egMgu3l34EJU/dRJatWH2XNMoty8/zlIxK8eHf1/5Nctsw7vqzHhyIuUr3L5isaT8qz1npg==}
@@ -1491,6 +1503,10 @@ snapshots:
   '@babel/helper-validator-identifier@7.28.5': {}
 
   '@babel/runtime@7.28.4': {}
+
+  '@dao3fun/arena-rich@1.1.3': {}
+
+  '@dao3fun/component@3.3.1': {}
 
   '@dao3fun/mine-motion@2.0.3': {}
 
