@@ -1,0 +1,62 @@
+{
+  "name": "wordle-world",
+  "version": "0.4.3",
+  "type": "module",
+  "scripts": {
+    "dev": "npm-run-all -p dev:*",
+    "build": "npm-run-all build:*",
+    "tsc": "npm-run-all -p tsc:*",
+    "tsc:check": "npm-run-all tsc:check:*",
+    "eslint:fix": "eslint --fix",
+    "prettier:write": "prettier . --write",
+    "tsc:client": "tsc -p client/tsconfig.json",
+    "tsc:server": "tsc -p server/tsconfig.json",
+    "tsc:check:client": "tsc -noEmit -p client/tsconfig.json",
+    "tsc:check:server": "tsc -noEmit -p server/tsconfig.json",
+    "dev:server": "cross-env VITE_BUILD_TARGET=server vite build --mode development --watch",
+    "dev:client": "cross-env VITE_BUILD_TARGET=client vite build --mode development --watch",
+    "build:server": "cross-env VITE_BUILD_TARGET=server vite build --mode production",
+    "build:client": "cross-env VITE_BUILD_TARGET=client vite build --mode production",
+    "debug:server": "cross-env VITE_BUILD_TARGET=server vite build --mode debug",
+    "debug:client": "cross-env VITE_BUILD_TARGET=client vite build --mode debug",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "cross-env": "^10.1.0",
+    "eslint": "^9.39.1",
+    "husky": "^9.1.7",
+    "i18next": "^25.7.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.7.4",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.48.1",
+    "vite": "^5.4.21",
+    "vite-plugin-arenapro-script": "^0.2.7",
+    "vite-plugin-checker": "^0.11.0"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/server/src/App.js",
+      "types": "./dist/server/src/App.d.ts"
+    },
+    "./client": {
+      "import": "./dist/client/src/App.js",
+      "types": "./dist/client/src/App.d.ts"
+    },
+    "./server": {
+      "import": "./dist/server/src/App.js",
+      "types": "./dist/server/src/App.d.ts"
+    },
+    "./shares": {
+      "import": "./dist/shares/src/App.js",
+      "types": "./dist/shares/src/App.d.ts"
+    }
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "dependencies": {
+    "@dao3fun/mine-motion": "^2.0.3"
+  }
+}

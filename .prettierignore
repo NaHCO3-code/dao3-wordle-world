@@ -1,0 +1,14 @@
+node_modules/
+.husky/
+**/.log/
+**/dist/
+GameAPI.d.ts
+ClientAPI.d.ts
+package-lock.json
+yarn.lock
+bun.lock
+pnpm-lock.yaml
+.prettierrc
+.prettierignore
+.lintstagedrc
+.gitignore

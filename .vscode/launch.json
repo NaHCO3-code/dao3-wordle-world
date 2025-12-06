@@ -1,0 +1,29 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Server Script Debug",
+      "runtimeArgs": ["--inspect-brk"],
+      // 调试路径（指向捆绑包路径）
+      "program": "${workspaceFolder}/dist/server/bundle.server.js",
+      "cwd": "${workspaceFolder}",
+      "skipFiles": ["<node_internals>/**"],
+      "sourceMaps": true,
+      "preLaunchTask": "debug:server"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Client Script Debug",
+      "runtimeArgs": ["--inspect-brk"],
+      // 调试路径（指向捆绑包路径）
+      "program": "${workspaceFolder}/dist/client/bundle.client.js",
+      "cwd": "${workspaceFolder}",
+      "skipFiles": ["<node_internals>/**"],
+      "sourceMaps": true,
+      "preLaunchTask": "debug:client"
+    }
+  ]
+}
