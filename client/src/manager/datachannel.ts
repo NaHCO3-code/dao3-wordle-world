@@ -1,7 +1,7 @@
 import type { ClientEvent, ClientEventType } from '@shares/clientEvent';
 import type { ServerEvent, ServerEventType } from '@shares/serverEvent';
-import { Singleton } from '@src/utils/singleton';
-import { genUUID4 } from '@src/utils/UUID';
+import { Singleton } from '@shares/utils/singleton';
+import { genUUID4 } from '@shares/utils/UUID';
 
 export class DataChannel<
   RemoteEvents extends Record<string, string>,

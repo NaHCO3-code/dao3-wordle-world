@@ -1,8 +1,11 @@
+import {
+  DEFAULT_MAX_TRIES,
+  DEFAULT_WORD_LENGTH,
+} from '@shares/utils/constants';
+import { Singleton } from '@shares/utils/singleton';
+import { genUUID4 } from '@shares/utils/UUID';
 import { DICT } from '@src/model/dict';
 import { Wordle } from '@src/model/wordle';
-import { DEFAULT_MAX_TRIES, DEFAULT_WORD_LENGTH } from '@src/utils/constants';
-import { Singleton } from '@src/utils/singleton';
-import { genUUID4 } from '@src/utils/UUID';
 
 export class Game extends Singleton<Game>() {
   private games = new Map<string, Wordle>();
