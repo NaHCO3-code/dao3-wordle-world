@@ -1,4 +1,4 @@
-import { DICT5 } from '@src/model/dict';
+import { DICT } from '@src/model/dict';
 import { Wordle } from '@src/model/wordle';
 import { DEFAULT_MAX_TRIES, DEFAULT_WORD_LENGTH } from '@src/utils/constants';
 import { Singleton } from '@src/utils/singleton';
@@ -13,7 +13,7 @@ export class Game extends Singleton<Game>() {
 
   createGame(): string {
     const id = genUUID4();
-    const dict = DICT5;
+    const dict = DICT;
     const answer = dict[Math.floor(Math.random() * dict.length)];
     const wordle = new Wordle({
       length: DEFAULT_WORD_LENGTH,
