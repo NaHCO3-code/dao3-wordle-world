@@ -17250,54 +17250,6 @@ declare class GameVoxels {
 
   /**
    * @zh
-   * 根据方块的数字 ID 获取其可读名称。如果 ID 无效，则返回空字符串。
-   * @en
-   * Gets the human-readable name of a voxel from its numeric ID. Returns an empty string if the ID is invalid.
-   * @param id
-   * @zh 方块的数字 ID。
-   * @en The numeric ID of the voxel.
-   * @returns
-   * @zh 方块的可读名称，如果 ID 无效则为空字符串。
-   * @en The human-readable name of the voxel, or an empty string if the ID is invalid.
-   * @category Voxel
-   */
-  name: (id: voxelId) => voxelName | "";
-
-  /**
-   * @zh
-   * 在指定的 x, y, z 坐标处设置一个方块。
-   * @en
-   * Sets a voxel at the specified x, y, z coordinates.
-   * @param x
-   * @zh x 坐标。
-   * @en The x-coordinate.
-   * @param y
-   * @zh y 坐标。
-   * @en The y-coordinate.
-   * @param z
-   * @zh z 坐标。
-   * @en The z-coordinate.
-   * @param voxel
-   * @zh 要设置的方块的名称或 ID。
-   * @en The name or ID of the voxel to set.
-   * @param rotation
-   * @zh （可选）方块的旋转代码。
-   * @en (Optional) The rotation code of the voxel.
-   * @returns
-   * @zh 更新后位置的方块 ID。
-   * @en The voxel ID of the updated position.
-   * @category Grid
-   */
-  setVoxel: (
-    x: number,
-    y: number,
-    z: number,
-    voxel: voxelId | voxelName,
-    rotation?: voxelRotation
-  ) => voxelId | 0;
-
-  /**
-   * @zh
    * 获取指定坐标处的方块 ID。
    * @en
    * Gets the voxel ID at the specified coordinates.
@@ -17360,13 +17312,224 @@ declare class GameVoxels {
    * @en The voxel ID of the updated position.
    * @category Advanced
    */
-  setVoxelId: (x: number, y: number, z: number, voxel: voxelId) => voxelId | 0;
+  setVoxelId(x: number, y: number, z: number, voxel: number | voxelId): voxelId | number;
+
+  /**
+   * @zh
+   * 在指定坐标处设置一个方块，并返回该方块的数字 ID。
+   *
+   * @en
+   * Sets a voxel at the given coordinates and returns its numeric ID.
+   *
+   * @param x
+   * @zh x 坐标。
+   * @en The x-coordinate.
+   * @param y
+   * @zh y 坐标。
+   * @en The y-coordinate.
+   * @param z
+   * @zh z 坐标。
+   * @en The z-coordinate.
+   * @param voxel
+   * @zh 要设置的方块数字 ID，可包含旋转码。
+   * @en The numeric voxel ID to set, which may include rotation bits.
+   * @param rotation
+   * @zh 可选的旋转码，为 `0` 或未传入时表示不使用旋转。
+   * @en Optional rotation code. `0` or `undefined` means no rotation.
+   * @returns
+   * @zh 若未使用旋转，返回不带旋转码的 `voxelId`；否则返回 `0`。
+   * @en Returns a plain `voxelId` when no rotation is used; otherwise returns `0`.
+   * @category Advanced
+   */
+ setVoxel(
+    x: number,
+    y: number,
+    z: number,
+    voxel: number,
+    rotation?: 0
+  ): voxelId | 0;
+
+  /**
+   * @zh
+   * 在指定坐标处设置一个带旋转信息的方块，并返回完整的数值 ID。
+   * 传入的 `voxel` 为基础方块 ID，最终返回的 ID 将包含旋转码。
+   *
+   * @en
+   * Sets a voxel with rotation at the given coordinates and returns the full
+   * numeric ID including rotation bits. The `voxel` argument is the base ID,
+   * and the returned value includes the rotation.
+   *
+   * @param x
+   * @zh x 坐标。
+   * @en The x-coordinate.
+   * @param y
+   * @zh y 坐标。
+   * @en The y-coordinate.
+   * @param z
+   * @zh z 坐标。
+   * @en The z-coordinate.
+   * @param voxel
+   * @zh 基础方块数值 ID（不含旋转码）。
+   * @en The base numeric voxel ID (without rotation bits).
+   * @param rotation
+   * @zh 旋转码，将编码进返回的 ID 中。
+   * @en The rotation code that will be encoded into the returned ID.
+   * @returns
+   * @zh 带旋转码的数值 ID。
+   * @en The numeric ID including rotation bits.
+   * @category Advanced
+   */
+  setVoxel(
+    x: number,
+    y: number,
+    z: number,
+    voxel: number,
+    rotation: voxelRotation
+  ): number;
+
+  /**
+   * @zh
+   * 在指定坐标处通过方块 ID 或方块名设置一个方块（不使用旋转，或旋转为 0），
+   * 并返回不带旋转码的 `voxelId`，否则返回 `0`。
+   *
+   * @en
+   * Sets a voxel at the given coordinates using a `voxelId` or `voxelName`
+   * without rotation (or with rotation `0`) and returns a plain `voxelId`.
+   * When rotation is not applicable, `0` is returned.
+   *
+   * @param x
+   * @zh x 坐标。
+   * @en The x-coordinate.
+   * @param y
+   * @zh y 坐标。
+   * @en The y-coordinate.
+   * @param z
+   * @zh z 坐标。
+   * @en The z-coordinate.
+   * @param voxel
+   * @zh 要设置的方块，可以是方块 ID 或方块名。
+   * @en The voxel to set, either as a `voxelId` or a `voxelName`.
+   * @param rotation
+   * @zh 可选旋转码，为 `0` 或未传入时表示不使用旋转。
+   * @en Optional rotation code. `0` or `undefined` means no rotation.
+   * @returns
+   * @zh 成功设置且不含旋转信息时返回 `voxelId`，否则返回 `0`。
+   * @en Returns a `voxelId` when set without rotation; otherwise returns `0`.
+   */
+  setVoxel(
+    x: number,
+    y: number,
+    z: number,
+    voxel: voxelId | voxelName,
+    rotation?: 0
+  ): voxelId | 0;
+
+  /**
+   * @zh
+   * 在指定坐标处通过方块 ID 或方块名设置一个带旋转的方块，
+   * 返回带旋转码的完整数值 ID。
+   *
+   * @en
+   * Sets a voxel with rotation at the given coordinates using either a
+   * `voxelId` or a `voxelName`, and returns the full numeric ID including
+   * rotation bits.
+   *
+   * @param x
+   * @zh x 坐标。
+   * @en The x-coordinate.
+   * @param y
+   * @zh y 坐标。
+   * @en The y-coordinate.
+   * @param z
+   * @zh z 坐标。
+   * @en The z-coordinate.
+   * @param voxel
+   * @zh 要设置的方块，可以是方块 ID 或方块名。
+   * @en The voxel to set, either as a `voxelId` or a `voxelName`.
+   * @param rotation
+   * @zh 旋转码，将编码进返回的 ID 中。
+   * @en The rotation code that will be encoded into the returned ID.
+   * @returns
+   * @zh 带旋转码的数值 ID。
+   * @en The numeric ID including rotation bits.
+   * @category Advanced
+   */
+  setVoxel(
+    x: number,
+    y: number,
+    z: number,
+    voxel: voxelId | voxelName,
+    rotation: voxelRotation
+  ): number;
+
+  /**
+   * @zh
+   * 在指定坐标处通过数值 ID 设置一个方块，并返回最终写入的数值 ID。
+   * 此处 `voxel` 可以是带旋转码的 ID，返回值同样是带旋转码的 ID。
+   *
+   * @en
+   * Sets a voxel at the given coordinates using a numeric ID and returns the
+   * actual ID that is stored. The `voxel` argument may already include rotation
+   * bits, and the returned value will also include them.
+   *
+   * @param x
+   * @zh x 坐标。
+   * @en The x-coordinate.
+   * @param y
+   * @zh y 坐标。
+   * @en The y-coordinate.
+   * @param z
+   * @zh z 坐标。
+   * @en The z-coordinate.
+   * @param voxel
+   * @zh 方块的数值 ID，可以包含旋转码。
+   * @en The numeric voxel ID to set, which may include rotation bits.
+   * @returns
+   * @zh 实际写入的数值 ID（可能包含旋转码）。
+   * @en The numeric ID actually stored (possibly including rotation bits).
+   * @category Advanced
+   */
+  setVoxelId(x: number, y: number, z: number, voxel: voxelId | number): voxelId | number;
+
+  /**
+   * @zh
+   * 在指定坐标处通过 `voxelId` 设置一个方块。
+   * 若传入的是不带旋转码的 `voxelId`，返回值也为不带旋转码的 `voxelId`；
+   * 若无法设置则返回 `0`。
+   *
+   * @en
+   * Sets a voxel at the given coordinates using a `voxelId`.
+   * If the provided ID is a plain `voxelId` without rotation bits, the
+   * returned value is also a plain `voxelId`; otherwise `0` is returned.
+   *
+   * @param x
+   * @zh x 坐标。
+   * @en The x-coordinate.
+   * @param y
+   * @zh y 坐标。
+   * @en The y-coordinate.
+   * @param z
+   * @zh z 坐标。
+   * @en The z-coordinate.
+   * @param voxel
+   * @zh 方块的 `voxelId`（不包含旋转码）。
+   * @en The `voxelId` of the voxel (without rotation bits).
+   * @returns
+   * @zh 设置成功时返回 `voxelId`，否则返回 `0`。
+   * @en Returns the `voxelId` on success, or `0` if it fails.
+   */
+  setVoxelId(x: number, y: number, z: number, voxel: voxelId): voxelId | 0;
 
   /**
    * @zh
    * 检索指定坐标处方块的数字 ID。这是 `getVoxel` 的一个更高效的版本。
+   * 返回的方块 ID 是带旋转码的 ID。
+   *
    * @en
-   * Retrieves the numeric ID of the voxel at the specified coordinates. This is a more performant version of `getVoxel`.
+   * Retrieves the numeric ID of the voxel at the specified coordinates.
+   * This is a more performant version of `getVoxel`. The returned ID
+   * includes rotation bits.
+   *
    * @param x
    * @zh x 坐标。
    * @en The x-coordinate.
@@ -17377,11 +17540,30 @@ declare class GameVoxels {
    * @zh z 坐标。
    * @en The z-coordinate.
    * @returns
-   * @zh 指定坐标处的方块 ID。
-   * @en The voxel ID at the specified coordinates.
+   * @zh 带旋转码的方块数值 ID。
+   * @en The numeric voxel ID including rotation bits.
    * @category Advanced
    */
-  getVoxelId: (x: number, y: number, z: number) => voxelId | 0;
+  getVoxelId(x: number, y: number, z: number): voxelId | number;
+
+  /**
+   * @zh
+   * 根据方块的数值 ID 获取对应的方块名称。
+   * 传入带旋转码的 ID 也可以正常解析为方块名。
+   *
+   * @en
+   * Resolves the voxel name from a numeric voxel ID.
+   * IDs that include rotation bits are also supported and will be
+   * correctly mapped to the base voxel name.
+   *
+   * @param id
+   * @zh 方块的数值 ID，可以包含旋转码。
+   * @en The numeric voxel ID, possibly including rotation bits.
+   * @returns
+   * @zh 与该 ID 对应的方块名称。
+   * @en The voxel name corresponding to the given ID.
+   */
+  name(id: voxelId | number): voxelName;
 
   /**
    * 游戏引擎核心类（由引擎内部管理，禁止开发者手动实例化）
