@@ -6,7 +6,9 @@
   "languages": {
     "TypeScript": {
       "code_actions_on_format": {
+        "source.fixAll.ts": true,
         "source.fixAll.eslint": true,
+        "source.sortImports": true,
         "source.organizeImports": true
       }
     }
