@@ -1,6 +1,6 @@
+import { Singleton } from '@shares/utils/singleton';
 import { DataChannel } from './manager/datachannel';
 import { PlayerManager } from './manager/player';
-import { Singleton } from './utils/singleton';
 
 export default class App extends Singleton<App>() {
   playerManager = PlayerManager.instance;
