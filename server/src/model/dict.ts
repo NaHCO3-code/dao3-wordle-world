@@ -1,4 +1,3 @@
-import { DEFAULT_WORD_LENGTH } from '@shares/utils/constants';
-import dict from '../assets/dict.json';
+import dict5 from '../assets/dict5.json';
 
-export const DICT = dict.filter((word) => word.length === DEFAULT_WORD_LENGTH);
+export const DICT = dict5;
