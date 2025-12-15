@@ -81,16 +81,18 @@ export function xcomputed<T>(
   update: () => T extends void ? never : T
 ): xComputed<T> {
   let value: T;
+  const res = {
+    get value() {
+      track(res);
+      return value;
+    },
+  };
   const effect = () => {
     activeEffect = effect;
     value = update();
     activeEffect = null;
+    trigger(res);
   };
   effect();
-  return {
-    get value() {
-      track(this);
-      return value;
-    },
-  };
+  return res;
 }
