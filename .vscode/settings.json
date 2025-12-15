@@ -65,7 +65,8 @@
   "i18n-ally.sourceLanguage": "zh-CN",
   "i18n-ally.localesPaths": ["i18n/res"],
   "i18n-ally.pathMatcher": "{locale}/{namespace}.json",
-  "i18n-ally.keystyle": "nested"
+  "i18n-ally.keystyle": "nested",
+  "cSpell.words": ["xignal"]
   // "files.autoSave": "afterDelay",
   // "files.autoSaveDelay": 1000
 }
