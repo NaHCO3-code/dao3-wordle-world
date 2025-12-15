@@ -6,9 +6,9 @@ import { createXylem } from './xylem';
 function __helper_basicUiPropsBinder(
   node: UiRenderable,
   props: {
-    [key in keyof (UiNode & UiRenderable)]?:
-    | xignal<(UiNode & UiRenderable)[key]>
-    | xRef<(UiNode & UiRenderable)[key]>;
+    [key in keyof (UiNode & UiRenderable & UiText)]?: xRef<
+      (UiNode & UiRenderable & UiText)[key]
+    >;
   }
 ) {
   for (const key in props) {
@@ -30,9 +30,9 @@ function __helper_basicUiPropsBinder(
 function __helper_complexUiPropsBinder(
   node: UiRenderable,
   props: {
-    [key in keyof (UiNode & UiRenderable)]?:
-    | xignal<(UiNode & UiRenderable)[key]>
-    | xRef<(UiNode & UiRenderable)[key]>;
+    [key in keyof (UiNode & UiRenderable & UiText)]?: xignal<
+      (UiNode & UiRenderable & UiText)[key]
+    >;
   }
 ) {
   for (const key in props) {
@@ -55,10 +55,13 @@ export function Text(props: {
   uiScale?: xignal<UiScale>;
   anchor?: xignal<Vec2>;
   position?: xignal<Coord2>;
+  size?: xignal<Coord2>;
   backgroundColor?: xignal<Vec3>;
+  textColor?: xignal<Vec3>;
 
   backgroundOpacity?: xRef<number>;
   rotation?: xRef<number>;
+  textFontSize?: xRef<number>;
 
   onPointerDown?: (ev: UiEvent) => void;
 
@@ -69,13 +72,16 @@ export function Text(props: {
   __helper_basicUiPropsBinder(node, {
     backgroundOpacity: props.backgroundOpacity,
     rotation: props.rotation,
+    textFontSize: props.textFontSize,
   });
 
   __helper_complexUiPropsBinder(node, {
     uiScale: props.uiScale,
     anchor: props.anchor,
     position: props.position,
+    size: props.size,
     backgroundColor: props.backgroundColor,
+    textColor: props.textColor,
   });
 
   xwatch(
@@ -94,6 +100,7 @@ export function Text(props: {
       return node;
     },
     destroy() { },
+    type: Text,
   });
 }
 
@@ -101,6 +108,7 @@ export function Box(props: {
   uiScale?: xignal<UiScale>;
   anchor?: xignal<Vec2>;
   position?: xignal<Coord2>;
+  size?: xignal<Coord2>;
   backgroundColor?: xignal<Vec3>;
 
   backgroundOpacity?: xRef<number>;
@@ -108,17 +116,23 @@ export function Box(props: {
 }): Xylem {
   const node = UiBox.create();
   __helper_basicUiPropsBinder(node, {
-    uiScale: props.uiScale,
-    anchor: props.anchor,
-    position: props.position,
-    backgroundColor: props.backgroundColor,
     backgroundOpacity: props.backgroundOpacity,
     rotation: props.rotation,
   });
+
+  __helper_complexUiPropsBinder(node, {
+    uiScale: props.uiScale,
+    anchor: props.anchor,
+    position: props.position,
+    size: props.size,
+    backgroundColor: props.backgroundColor,
+  });
+
   return createXylem({
     setup() {
       return node;
     },
     destroy() { },
+    type: Box,
   });
 }
