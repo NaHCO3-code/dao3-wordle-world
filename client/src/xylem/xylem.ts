@@ -4,18 +4,22 @@ import type { xignal } from './xignal';
 export interface Xylem {
   setup: () => UiNode;
   destroy: () => void;
+  type: xFunctionComponent<any>;
   child: Xylem | null;
   sibling: Xylem | null;
   return: Xylem | null;
   uiNode: UiNode | null;
 }
 
-export function createXylem(config: Partial<Xylem>): Xylem {
+export function createXylem(
+  config: Partial<Xylem> &
+    Required<{
+      setup: () => UiNode;
+      destroy: () => void;
+      type: xFunctionComponent<any>;
+    }>
+): Xylem {
   return {
-    setup: () => {
-      throw new Error('Not Implemented');
-    },
-    destroy: () => { },
     child: null,
     sibling: null,
     return: null,
@@ -26,14 +30,17 @@ export function createXylem(config: Partial<Xylem>): Xylem {
 
 export type xProps = Record<string, xignal<any>>;
 
-export type xFunctionComponent<T extends xProps> = (props: T) => Xylem;
+export type xFunctionComponent<T extends xProps> = (
+  props: T,
+  ...args: Xylem[]
+) => Xylem;
 
 export function xComponent<T extends xProps>(
   fn: xFunctionComponent<T>,
   props: T,
-  children: Xylem[] = []
+  ...children: Xylem[]
 ): Xylem {
-  const self = fn(props);
+  const self = fn(props, ...children);
   if (!children || children.length === 0) {
     return self;
   }
@@ -48,12 +55,12 @@ export function xComponent<T extends xProps>(
   return self;
 }
 
-function render(root: Xylem) {
+export function xSetup(root: Xylem) {
   const rootNode = root.setup();
   root.uiNode = rootNode;
   let current = root.child;
   while (current) {
-    const childNode = render(current);
+    const childNode = xSetup(current);
     current.uiNode = childNode;
     childNode.parent = rootNode;
     current = current.sibling;
@@ -61,9 +68,23 @@ function render(root: Xylem) {
   return rootNode;
 }
 
-export function mount(component: xFunctionComponent<any>, root: UiScreen) {
+export function xDestroy(root: Xylem) {
+  let current = root.child;
+  while (current) {
+    current.destroy();
+    if (current.uiNode !== current.return?.uiNode) {
+      current.uiNode!.parent = undefined;
+    }
+    current.uiNode = null;
+    xDestroy(current);
+    current = current.sibling;
+  }
+  root.child = null;
+}
+
+export function xMount(component: xFunctionComponent<any>, root: UiScreen) {
   const appXylem = xComponent(component, {});
-  const appNode = render(appXylem);
+  const appNode = xSetup(appXylem);
   appNode.parent = root;
   return appNode;
 }

@@ -3,13 +3,26 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@src/*": ["./src/*"],
-      "@shares/*": ["../shares/*"],
-      "@client/*": ["./*"],
-      "@root/*": ["../*"]
-    }
+      "@src/*": [
+        "./src/*"
+      ],
+      "@shares/*": [
+        "../shares/*"
+      ],
+      "@client/*": [
+        "./*"
+      ],
+      "@root/*": [
+        "../*"
+      ]
+    },
+    "jsx": "react",
+    "jsxFactory": "xComponent"
   },
-  "exclude": ["node_modules", "./**/dist"],
+  "exclude": [
+    "node_modules",
+    "./**/dist"
+  ],
   "include": [
     "./types/**/*",
     "./UiIndex/**/*",

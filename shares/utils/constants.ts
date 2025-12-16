@@ -19,4 +19,4 @@ export enum CHECK_ERROR {
 }
 
 /* literals */
-export const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+export const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
